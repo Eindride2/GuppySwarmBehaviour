@@ -46,7 +46,11 @@ dataloader = DataLoader(dataset, batch_size=batch_size, drop_last=True, shuffle=
 epochs = 12
 for i in range(epochs):
     try:
-        h = model.init_hidden(batch_size, num_layers, hidden_layer_size)
+        if output_model == "multi_modal":
+            h = model.init_hidden(batch_size, num_layers, hidden_layer_size)
+        else:
+            h = model.init_hidden(batch_size, num_layers)
+            
         states = [model.init_hidden(batch_size, 1, hidden_layer_size) for _ in range(num_layers * 2)]
         loss = 0
         for inputs, targets in dataloader:
